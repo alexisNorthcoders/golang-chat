@@ -1,0 +1,19 @@
+package main
+
+import (
+	"log"
+	"net/http"
+)
+
+func main() {
+	setupAPI()
+
+	log.Fatal(http.ListenAndServe(":1234", nil))
+}
+
+func setupAPI() {
+	manager := NewManager()
+
+	http.Handle("/", http.FileServer(http.Dir("./frontend")))
+	http.HandleFunc("/ws", manager.serveWS)
+}
