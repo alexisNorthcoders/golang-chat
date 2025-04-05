@@ -30,6 +30,8 @@ func (c *Client) readMessages() {
 		c.manager.removeClient(c)
 	}()
 
+	c.connection.SetReadLimit(512)
+
 	for {
 		_, payload, err := c.connection.ReadMessage()
 
